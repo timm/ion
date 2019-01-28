@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+cd ../src 
+
+_c0="\033[00m"
+_c1="\033[01;32m"
+_c2="\033[01;34m"
+_c3="\033[31m"
+_c4="\033[35m"
+
+echo "${_c4}\nBooting Ion${_c0}"
+
+Files=`ls | grep lisp`
+
+zaps() {
+  for f in `echo $Files`; do
+    if [ -L "$f" ]
+    then echo "${_c1}  - zapping $f${_c0}" 
+         rm $f 
+    fi
+  done
+}
+adds() {
+  for f in */*.lisp; do
+    g=$(basename $f)
+    if [ -L "$g" ] 
+    then echo "${_c3}  - skipping $g ${_c0}"
+    else echo "${_c2}  - linking $g ${_c0}"
+         ln -sf $f $g
+    fi
+  done
+}
+zaps
+adds
+
+alias put="git commit -am saving; git push"
