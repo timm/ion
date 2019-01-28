@@ -24,8 +24,8 @@ adds() {
   for f in */*.lisp; do
     g=$(basename $f)
     if [ -L "$g" ] 
-    then echo "${_c3}  - skipping $g ${_c0}"
-    else echo "${_c2}  - linking $g ${_c0}"
+    then echo "${_c3}  - skipping $f ${_c0}"
+    else echo "${_c2}  - linking $f ${_c0}"
          ln -sf $f $g
     fi
   done
